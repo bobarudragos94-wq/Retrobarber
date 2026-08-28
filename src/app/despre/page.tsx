@@ -88,7 +88,7 @@ export default async function DesprePage() {
           { k: "2018", v: "anul înființării" },
           { k: `${locations.length}`, v: "locații în București" },
           { k: `${barbers.length}`, v: "frizeri în echipă" },
-          { k: "4.9", v: "rating mediu" },
+          { k: "10–21", v: "Luni – Sâmbătă" },
         ].map((s) => (
           <div key={s.v} className="card p-5">
             <dt className="display text-4xl leading-none text-brass">{s.k}</dt>

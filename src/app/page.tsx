@@ -85,7 +85,7 @@ export default async function HomePage() {
 
               <dl className="mt-7 grid max-w-md grid-cols-3 gap-3">
                 {[
-                  { k: "4.9", v: "rating mediu" },
+                  { k: "2018", v: "de când tundem" },
                   { k: `${barbers.length}`, v: "frizeri" },
                   { k: "10–21", v: "Luni – Sâmbătă" },
                 ].map((s) => (
@@ -225,11 +225,13 @@ export default async function HomePage() {
                   <Pin width={11} height={11} className="text-brass" />
                   {loc?.short_name}
                 </p>
-                <p className="mt-1 flex items-center gap-1 text-[11px] text-brass">
-                  <Star width={11} height={11} />
-                  {b.rating.toFixed(1)}
-                  <span className="text-faint">({b.reviews_count})</span>
-                </p>
+                {b.reviews_count > 0 && (
+                  <p className="mt-1 flex items-center gap-1 text-[11px] text-brass">
+                    <Star width={11} height={11} />
+                    {b.rating.toFixed(1)}
+                    <span className="text-faint">({b.reviews_count})</span>
+                  </p>
+                )}
               </Link>
             );
           })}

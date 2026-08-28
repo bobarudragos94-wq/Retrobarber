@@ -104,10 +104,12 @@ export default async function LocatiePage({ params }: { params: Promise<{ slug: 
               </span>
               <h3 className="mt-3 text-[15px] font-semibold text-cream">{b.name}</h3>
               <p className="text-[11px] text-faint">{b.role}</p>
-              <p className="mt-2 flex items-center gap-1 text-[11px] text-brass">
-                <Star width={11} height={11} />
-                {b.rating.toFixed(1)}
-              </p>
+              {b.reviews_count > 0 && (
+                <p className="mt-2 flex items-center gap-1 text-[11px] text-brass">
+                  <Star width={11} height={11} />
+                  {b.rating.toFixed(1)}
+                </p>
+              )}
             </Link>
           ))}
         </div>

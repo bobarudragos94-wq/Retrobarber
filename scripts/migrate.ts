@@ -1,25 +1,12 @@
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
+import { SCHEMA_STATEMENTS } from "../src/lib/schema";
 import { client } from "./_client";
 
 async function main() {
   const db = client();
-  const sql = readFileSync(join(process.cwd(), "db", "schema.sql"), "utf8");
-  const statements = sql
-    .split(";")
-    .map((chunk) =>
-      chunk
-        .split("\n")
-        .filter((line) => !line.trim().startsWith("--"))
-        .join("\n")
-        .trim(),
-    )
-    .filter(Boolean);
-
-  for (const stmt of statements) {
-    await db.execute(stmt);
+  for (const statement of SCHEMA_STATEMENTS) {
+    await db.execute(statement);
   }
-  console.log(`✓ ${statements.length} instrucțiuni aplicate.`);
+  console.log(`✓ ${SCHEMA_STATEMENTS.length} instrucțiuni aplicate.`);
 }
 
 main().catch((e) => {

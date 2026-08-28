@@ -78,29 +78,37 @@ TURSO_AUTH_TOKEN="<token>"
 NEXT_PUBLIC_SITE_URL="https://retrobarbershop.ro"
 ```
 
-Apoi creezi tabelele și datele, în oricare dintre feluri:
+**Atât.** La prima cerere, aplicația își creează singură tabelele și, dacă baza e
+goală, pune datele de referință (locații, echipă, servicii, abonamente, regula de
+last-minute). Nu e nevoie de niciun pas manual, nici de terminal.
 
-- **de pe telefon / din browser**: lipești `db/setup.sql` în consola SQL a bazei
-  din dashboard-ul Turso — conține schema completă plus locațiile, echipa,
-  serviciile, abonamentele și regula de last-minute;
-- **din terminal**: `turso db shell retro-barbershop < db/setup.sql`;
-- **din proiect**, cu variabilele setate local: `npm run db:reset`.
+Inițializarea e idempotentă: schema folosește `CREATE TABLE IF NOT EXISTS`, datele
+se inserează cu `INSERT OR IGNORE`, iar seed-ul rulează doar dacă tabela `locations`
+e goală. Două instanțe care pornesc simultan nu pot produce dubluri, iar o repornire
+nu atinge programările existente. Verificarea se face o singură dată per instanță de
+server, deci nu costă nimic la cererile următoare.
 
-`db/setup.sql` se poate rula de mai multe ori fără să strice nimic: șterge întâi
-datele de referință și le pune la loc. Nu atinge programările clienților.
+Dacă preferi să faci pasul manual, `db/setup.sql` conține aceleași instrucțiuni,
+numerotate și separate. Pune `RETRO_SKIP_BOOTSTRAP=1` ca să oprești inițializarea
+automată.
 
-Dacă `TURSO_DATABASE_URL` lipsește, aplicația folosește automat `file:local.db` — util
-pentru dezvoltare, dar nu pentru producție (pe Vercel discul este efemer).
+> Consola SQL din dashboard-ul Turso rulează **o singură instrucțiune odată**.
+> Dacă lipești tot fișierul și primești `no such table: main.locations`, înseamnă
+> că blocul cu tabele nu s-a aplicat: rulează instrucțiunile una câte una, în
+> ordinea din fișier.
 
----
+Dacă `TURSO_DATABASE_URL` lipsește, aplicația folosește automat `file:local.db` —
+util pentru dezvoltare, dar nu pentru producție (pe Vercel discul este efemer).
 
 ## Structură
 
 ```
-db/schema.sql              schema completă (locații, frizeri, servicii, programări,
-                           abonamente, excluderi orare, reguli last-minute)
-scripts/                   migrate · seed · generator de iconițe
+db/setup.sql               generat din cod: schema + datele, pentru rularea manuală
+scripts/                   migrate · seed · gen-sql · generator de iconițe
 src/lib/
+  schema.ts                schema, ca listă de instrucțiuni — sursa unică de adevăr
+  seed-data.ts             datele reale ale salonului (locații, echipă, servicii, abonamente)
+  bootstrap.ts             creează schema și pune datele la prima pornire, dacă baza e goală
   config.ts                constante de programare, fără acces la DB (se importă și în client)
   db.ts                    clientul libSQL, cu fallback local
   time.ts                  utilitare de dată/oră în fusul Europe/Bucharest
@@ -131,6 +139,7 @@ src/components/            QuickBook · BookingFlow · ConfirmSheet · LastMinut
 | Program pe locație (deschidere, închidere, zile închise) | coloanele `opens_at`, `closes_at`, `closed_days` din `locations` |
 | Procent și fereastră pentru reducerea last-minute | tabela `last_minute_rules` |
 | Servicii, durate, prețuri | tabela `services` |
+| Notele și numărul de recenzii ale frizerilor | tabela `barbers`, coloanele `rating` și `reviews_count` — pornesc de la zero și nu se afișează până nu ai cifre reale |
 | Abonamente și beneficii | tabela `membership_plans` (`perks` este JSON) |
 | Concedii, pauze, zile libere | tabela `time_off` (pe frizer sau pe locație) |
 
@@ -160,3 +169,6 @@ WHERE slug = 'pallady';
   independent de fusul serverului.
 - **Fără conturi și fără parole**: identitatea clientului este numărul de telefon.
 - **Fără plată online**, conform cerinței — nici la rezervare, nici la abonament.
+- **Fără cifre inventate în interfață.** Notele frizerilor pornesc de la zero și
+  nu se afișează până nu există recenzii reale, ca să nu apară dovezi sociale
+  fabricate în fața clienților.

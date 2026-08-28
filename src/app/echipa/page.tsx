@@ -63,11 +63,13 @@ export default async function EchipaPage() {
                     </span>
                     <h3 className="mt-3 text-[15px] font-semibold text-cream">{b.name}</h3>
                     <p className="text-[11px] text-faint">{b.role}</p>
-                    <p className="mt-2 flex items-center gap-1 text-[11px] text-brass">
-                      <Star width={11} height={11} />
-                      {b.rating.toFixed(1)}
-                      <span className="text-faint">({b.reviews_count} recenzii)</span>
-                    </p>
+                    {b.reviews_count > 0 && (
+                      <p className="mt-2 flex items-center gap-1 text-[11px] text-brass">
+                        <Star width={11} height={11} />
+                        {b.rating.toFixed(1)}
+                        <span className="text-faint">({b.reviews_count} recenzii)</span>
+                      </p>
+                    )}
                     <p className="mt-2.5 flex items-center gap-1 text-[11px] text-muted">
                       <Pin width={11} height={11} className="text-brass" />
                       {loc.short_name}

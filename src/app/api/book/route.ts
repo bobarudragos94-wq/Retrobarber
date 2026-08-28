@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { all, db, one, run } from "@/lib/db";
+import { all, db, one, ready, run } from "@/lib/db";
 import { id, normalizePhone, publicCode } from "@/lib/id";
 import type { LastMinuteRule } from "@/lib/availability";
 import { MIN_LEAD_MIN } from "@/lib/config";
@@ -46,6 +46,8 @@ export async function POST(req: NextRequest) {
 
   const startMin = Number(body.startMin);
   if (!Number.isInteger(startMin) || startMin < 0 || startMin > 1440) return bad("Oră invalidă.");
+
+  await ready();
 
   const [service, barber] = await Promise.all([
     one<Service>("SELECT * FROM services WHERE id = ? AND active = 1", [body.serviceId ?? ""]),
