@@ -78,7 +78,16 @@ TURSO_AUTH_TOKEN="<token>"
 NEXT_PUBLIC_SITE_URL="https://retrobarbershop.ro"
 ```
 
-Apoi, o singură dată, cu variabilele setate local: `npm run db:reset`.
+Apoi creezi tabelele și datele, în oricare dintre feluri:
+
+- **de pe telefon / din browser**: lipești `db/setup.sql` în consola SQL a bazei
+  din dashboard-ul Turso — conține schema completă plus locațiile, echipa,
+  serviciile, abonamentele și regula de last-minute;
+- **din terminal**: `turso db shell retro-barbershop < db/setup.sql`;
+- **din proiect**, cu variabilele setate local: `npm run db:reset`.
+
+`db/setup.sql` se poate rula de mai multe ori fără să strice nimic: șterge întâi
+datele de referință și le pune la loc. Nu atinge programările clienților.
 
 Dacă `TURSO_DATABASE_URL` lipsește, aplicația folosește automat `file:local.db` — util
 pentru dezvoltare, dar nu pentru producție (pe Vercel discul este efemer).
