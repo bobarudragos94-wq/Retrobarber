@@ -20,7 +20,7 @@
   --color-barber-blue: #2f5fc8;
   --color-mint: #4fbf8b;
 
-  --font-display: var(--font-bebas), "Oswald", "Arial Narrow", sans-serif;
+  --font-display: var(--font-display-face), "Barlow Condensed", "Arial Narrow", sans-serif;
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, sans-serif;
 
   --radius-xl2: 1.25rem;
@@ -48,6 +48,28 @@ body {
 
 ::selection { background: var(--color-brass); color: #0a0a0b; }
 
+/* --- cuvinte care se rotesc (5 cuvinte × 20% din ciclu fiecare) --- */
+@keyframes cycle-word {
+  0%   { opacity: 0; transform: translateY(0.42em) scale(0.96); filter: blur(8px); }
+  2.5% { opacity: 1; transform: none;                            filter: blur(0); }
+  16%  { opacity: 1; transform: none;                            filter: blur(0); }
+  20%  { opacity: 0; transform: translateY(-0.42em) scale(1.03); filter: blur(8px); }
+  100% { opacity: 0; transform: translateY(-0.42em) scale(1.03); filter: blur(8px); }
+}
+
+@keyframes cycle-rule {
+  0%   { transform: scaleX(0); opacity: 0; }
+  3%   { transform: scaleX(0); opacity: 1; }
+  16%  { transform: scaleX(1); opacity: 1; }
+  20%  { transform: scaleX(1); opacity: 0; }
+  100% { transform: scaleX(1); opacity: 0; }
+}
+
+@keyframes aurora {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.9; }
+  50%      { transform: translate3d(-3%, 2%, 0) scale(1.08); opacity: 1; }
+}
+
 @keyframes rise {
   from { opacity: 0; transform: translateY(14px); }
   to   { opacity: 1; transform: none; }
@@ -71,9 +93,10 @@ body {
   /* ---------- tipografie ---------- */
   .display {
     font-family: var(--font-display);
-    font-weight: 400;
-    letter-spacing: 0.01em;
-    line-height: 0.92;
+    font-weight: 600;
+    letter-spacing: 0.012em;
+    /* 1.0 lasă loc virgulei de sub Ș/Ț, care altfel iese din cutia liniei */
+    line-height: 1;
     text-transform: uppercase;
   }
 
@@ -218,6 +241,56 @@ body {
   .hscroll::-webkit-scrollbar { display: none; }
   .hscroll > * { scroll-snap-align: start; flex: 0 0 auto; }
 
+
+  /* ---------- cuvinte care se rotesc ---------- */
+  .cycle {
+    --cycle-step: 2.4s;
+    position: relative;
+    display: inline-block;
+    vertical-align: baseline;
+    text-align: left;
+  }
+
+  .cycle__sizer {
+    visibility: hidden;
+    display: inline-block;
+  }
+
+  .cycle__word {
+    position: absolute;
+    inset: 0 auto auto 0;
+    white-space: nowrap;
+    opacity: 0;
+    will-change: opacity, transform, filter;
+    animation: cycle-word calc(var(--cycle-step) * 5) cubic-bezier(0.22, 1, 0.36, 1) infinite both;
+  }
+
+  .cycle__text {
+    background: linear-gradient(100deg, #f2d79a 0%, #d9ab55 46%, #b8892f 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* linia aurie care se desenează sub cuvântul activ */
+  .cycle__word::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -0.18em;
+    height: 2px;
+    border-radius: 2px;
+    transform-origin: left center;
+    background: linear-gradient(90deg, var(--color-brass) 0%, rgba(242, 215, 154, 0.9) 55%, transparent 100%);
+    animation: cycle-rule calc(var(--cycle-step) * 5) cubic-bezier(0.22, 1, 0.36, 1) infinite both;
+    animation-delay: inherit;
+  }
+
+  .aurora {
+    animation: aurora 18s ease-in-out infinite;
+  }
+
   /* ---------- animatii ---------- */
   .rise { animation: rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
 
@@ -233,7 +306,11 @@ body {
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .rise, .sheet-in, .pulse-dot, .skeleton { animation: none !important; }
+    .rise, .sheet-in, .pulse-dot, .skeleton, .aurora { animation: none !important; }
+    /* fara miscare: ramane doar primul cuvant, static */
+    .cycle__word, .cycle__word::after { animation: none !important; }
+    .cycle__word { opacity: 0; }
+    .cycle__word:first-of-type { opacity: 1; }
     html { scroll-behavior: auto; }
   }
 

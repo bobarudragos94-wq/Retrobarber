@@ -21,6 +21,7 @@ sunt regândite de la zero, cu prioritate pentru mobil și conversie.
 | **Reducere last-minute** | buton pe prima pagină + `/last-minute` | Sloturile rămase libere **azi** primesc automat reducerea configurată (implicit −20%). |
 | **Abonamente** | `/abonamente` | 12 / 24 / 24-premium ședințe pe an, cu −10% / −15% / −20%. Calculator de economie. **Fără flux de plată** — cererea se salvează cu status `pending` și se confirmă telefonic. |
 | **Recenzie Google după programare** | `/confirmare/[cod]` | Buton dedicat către formularul Google al locației; devine acțiune principală după ce programarea a trecut. Apăsarea se marchează în `appointments.reviewed_at`. |
+| **Titlu animat** | prima pagină | Titlul brandului rămâne „Barbershop autentic / Experiența Retro”, iar sub el se rotesc cuvintele care definesc salonul, cu o linie aurie care se desenează sub fiecare. Animația e pur CSS, fără JavaScript, și se oprește la `prefers-reduced-motion`. |
 | **PWA** | `manifest.webmanifest` + `sw.js` | Instalabilă, cu shortcut-uri („Rezervare rapidă”, „Oferte de azi”), pagină de offline și cache pentru shell. Disponibilitatea nu se cache-uiește niciodată. |
 | **Adaugă în calendar** | `/api/appointments/[cod]/ics` | Fișier `.ics` cu alarmă la 2 ore înainte, cu fusul orar al Bucureștiului calculat corect. |
 
@@ -31,6 +32,9 @@ sunt regândite de la zero, cu prioritate pentru mobil și conversie.
 - **Next.js 15** (App Router, React 19, Server Components)
 - **TypeScript** strict
 - **Tailwind CSS v4** — sistem de design propriu (`src/app/globals.css`)
+- **Barlow Condensed + Inter** — fontul de titluri e ales pentru că are glifele
+  precompuse `Ș/ș` și `Ț/ț` cu virgulă dedesubt; Bebas Neue și Oswald le compun
+  și le desenează greșit
 - **Turso / libSQL** (`@libsql/client`) — cu fallback pe fișier local în dezvoltare
 - **Vercel** — fără configurație suplimentară
 
@@ -104,7 +108,8 @@ src/app/api/
   appointments/[cod]/review marchează apăsarea butonului de recenzie
   appointments/lookup      istoricul unui număr de telefon
 src/components/            QuickBook · BookingFlow · ConfirmSheet · LastMinute ·
-                           MembershipPlans · ReviewCTA · header/footer/bara mobilă
+                           MembershipPlans · ReviewCTA · WordCycle (titlul animat) ·
+                           Portal · header/footer/bara mobilă
 ```
 
 ---

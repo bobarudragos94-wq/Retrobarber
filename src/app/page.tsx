@@ -6,6 +6,7 @@ import { SectionHead, Wrap } from "@/components/Section";
 import { ServiceCard } from "@/components/ServiceCard";
 import { ArrowRight, Bolt, Check, Pin, Repeat, Scissors, Star } from "@/components/Icons";
 import { avatarTint, initials } from "@/lib/format";
+import { WordCycle } from "@/components/WordCycle";
 
 export const dynamic = "force-dynamic";
 
@@ -27,7 +28,7 @@ export default async function HomePage() {
       <section className="relative overflow-hidden">
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 -z-10"
+          className="aurora pointer-events-none absolute inset-0 -z-10"
           style={{
             background:
               "radial-gradient(900px 520px at 78% -8%, rgba(217,171,85,0.16), transparent 62%), radial-gradient(680px 420px at 6% 8%, rgba(200,64,47,0.09), transparent 60%)",
@@ -35,7 +36,7 @@ export default async function HomePage() {
         />
         <Wrap className="pb-10 pt-8 sm:pt-14">
           {/* Pe mobil cardul de rezervare urca imediat sub titlu; pe desktop sta in dreapta. */}
-          <div className="grid items-start gap-6 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12">
+          <div className="grid items-start gap-6 lg:grid-cols-[1.05fr_0.95fr] lg:gap-x-12 lg:gap-y-7">
             <div className="rise order-1 min-w-0 lg:col-start-1 lg:row-start-1">
               <p className="eyebrow flex flex-wrap items-center gap-x-2.5 gap-y-1">
                 <span>București</span>
@@ -45,11 +46,16 @@ export default async function HomePage() {
                 <span>din 2018</span>
               </p>
 
-              <h1 className="display mt-3 text-[44px] leading-[0.88] text-cream sm:text-[76px] lg:text-[86px]">
-                Tunsoarea ta,
+              <h1 className="display mt-3 text-[40px] leading-[0.96] text-cream sm:text-[58px] lg:text-[70px]">
+                Barbershop autentic
                 <br />
-                <span className="gold-text">în două tapuri.</span>
+                <span className="gold-text">Experiența Retro</span>
               </h1>
+
+              <p className="mt-5 flex flex-wrap items-baseline gap-x-2.5 gap-y-1 text-[15px] text-muted sm:text-lg">
+                <span>Aici înseamnă</span>
+                <WordCycle className="display text-[26px] leading-none sm:text-[34px]" />
+              </p>
             </div>
 
             <div
@@ -62,8 +68,8 @@ export default async function HomePage() {
 
             <div className="rise order-3 min-w-0 lg:col-start-1 lg:row-start-2" style={{ animationDelay: "60ms" }}>
               <p className="max-w-md text-[15px] leading-relaxed text-muted sm:text-base">
-                Perfecțiune. Pasiune. Tradiție. Aplicația ține minte frizerul, locația
-                și ora ta preferată — și îți propune direct cele mai bune trei intervale.
+                Din 2018, în patru saloane din București. Aplicația ține minte frizerul,
+                locația și ora ta preferată — și îți propune direct cele mai bune trei intervale.
               </p>
 
               <div className="mt-5 flex flex-wrap gap-2.5">
@@ -267,7 +273,7 @@ export default async function HomePage() {
       <Wrap className="pb-6">
         <div className="card grain relative overflow-hidden p-8 text-center sm:p-12">
           <p className="eyebrow">Perfecțiune. Pasiune. Tradiție.</p>
-          <h2 className="display mx-auto mt-3 max-w-xl text-[40px] leading-[0.92] text-cream sm:text-6xl">
+          <h2 className="display mx-auto mt-3 max-w-xl text-[40px] leading-[0.96] text-cream sm:text-6xl">
             Scaunul tău te așteaptă
           </h2>
           <p className="mx-auto mt-3 max-w-md text-sm text-muted">

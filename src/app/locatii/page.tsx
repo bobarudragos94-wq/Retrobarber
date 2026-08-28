@@ -20,7 +20,7 @@ export default async function LocatiiPage() {
     <Wrap className="pb-16 pt-8">
       <header className="mb-8 max-w-2xl">
         <p className="eyebrow">Locații</p>
-        <h1 className="display mt-2 text-[46px] leading-[0.9] text-cream sm:text-6xl">
+        <h1 className="display mt-2 text-[46px] leading-[0.96] text-cream sm:text-6xl">
           Patru saloane în București
         </h1>
         <p className="mt-3 text-sm leading-relaxed text-muted sm:text-base">

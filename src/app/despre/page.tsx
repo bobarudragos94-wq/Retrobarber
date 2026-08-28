@@ -28,7 +28,7 @@ export default async function DesprePage() {
     <Wrap className="pb-16 pt-8">
       <header className="max-w-2xl">
         <p className="eyebrow">Din 2018</p>
-        <h1 className="display mt-2 text-[46px] leading-[0.9] text-cream sm:text-6xl">
+        <h1 className="display mt-2 text-[46px] leading-[0.96] text-cream sm:text-6xl">
           Perfecțiune.
           <br />
           Pasiune.

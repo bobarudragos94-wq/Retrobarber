@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Bebas_Neue, Inter } from "next/font/google";
+import { Barlow_Condensed, Inter } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
@@ -12,10 +12,12 @@ const inter = Inter({
   display: "swap",
 });
 
-const bebas = Bebas_Neue({
-  subsets: ["latin"],
-  weight: "400",
-  variable: "--font-bebas",
+// Barlow Condensed are glifele precompuse Ș/ș și Ț/ț cu virgulă dedesubt,
+// spre deosebire de Bebas Neue sau Oswald, care le compun și le desenează greșit.
+const displayFont = Barlow_Condensed({
+  subsets: ["latin", "latin-ext"],
+  weight: ["500", "600", "700"],
+  variable: "--font-display-face",
   display: "swap",
 });
 
@@ -77,7 +79,7 @@ const jsonLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ro" className={`${inter.variable} ${bebas.variable}`}>
+    <html lang="ro" className={`${inter.variable} ${displayFont.variable}`}>
       <body>
         <a
           href="#main"

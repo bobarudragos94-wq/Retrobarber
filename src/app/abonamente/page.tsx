@@ -41,7 +41,7 @@ export default async function AbonamentePage() {
     <Wrap className="pb-16 pt-8">
       <header className="mb-7 max-w-2xl">
         <p className="eyebrow">Abonamente Retro</p>
-        <h1 className="display mt-2 text-[46px] leading-[0.9] text-cream sm:text-6xl">
+        <h1 className="display mt-2 text-[46px] leading-[0.96] text-cream sm:text-6xl">
           Plătești mai puțin
           <br />
           <span className="gold-text">pentru fiecare tunsoare</span>
