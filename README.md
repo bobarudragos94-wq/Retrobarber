@@ -29,7 +29,9 @@ sunt regândite de la zero, cu prioritate pentru mobil și conversie.
 
 ## Stack
 
-- **Next.js 15** (App Router, React 19, Server Components)
+- **Next.js 15.5** (App Router, React 19.2, Server Components) — versiunile sunt
+  fixate pe patch-urile care corectează CVE-2025-66478 / CVE-2025-55182
+  (React2Shell); sub ele, Vercel refuză deploy-ul
 - **TypeScript** strict
 - **Tailwind CSS v4** — sistem de design propriu (`src/app/globals.css`)
 - **Barlow Condensed + Inter** — fontul de titluri e ales pentru că are glifele
